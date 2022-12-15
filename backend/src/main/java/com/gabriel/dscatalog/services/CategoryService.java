@@ -3,6 +3,7 @@ package com.gabriel.dscatalog.services;
 import com.gabriel.dscatalog.dto.CategoryDTO;
 import com.gabriel.dscatalog.entities.Category;
 import com.gabriel.dscatalog.repository.CategoryRepository;
+import com.gabriel.dscatalog.services.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,5 +25,12 @@ public class CategoryService {
                 .map(category -> new CategoryDTO(category))
                 .collect(Collectors.toList());
     }
+    @Transactional(readOnly = true)
+    public CategoryDTO findById(Long id) {
+        Category category = categoryRepository
+                .findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Entity not found"));
 
+        return new CategoryDTO(category);
+    }
 }
