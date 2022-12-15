@@ -3,8 +3,11 @@ package com.gabriel.dscatalog.services;
 import com.gabriel.dscatalog.dto.CategoryDTO;
 import com.gabriel.dscatalog.entities.Category;
 import com.gabriel.dscatalog.repository.CategoryRepository;
+import com.gabriel.dscatalog.services.exceptions.DatabaseException;
 import com.gabriel.dscatalog.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,6 +59,16 @@ public class CategoryService {
           return new CategoryDTO(category);
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Id not found " + id);
+        }
+    }
+
+    public void delete(Long id) {
+        try {
+            categoryRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException("Id not found " + id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("Integrity violation");
         }
     }
 }
