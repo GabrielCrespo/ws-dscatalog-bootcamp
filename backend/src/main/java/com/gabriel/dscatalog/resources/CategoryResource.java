@@ -1,6 +1,6 @@
 package com.gabriel.dscatalog.resources;
 
-import com.gabriel.dscatalog.entities.Category;
+import com.gabriel.dscatalog.dto.CategoryDTO;
 import com.gabriel.dscatalog.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +18,8 @@ public class CategoryResource {
     private CategoryService categoryService;
 
     @GetMapping()
-    public ResponseEntity<List<Category>> findAll() {
-        List<Category> list = categoryService.findAll();
+    public ResponseEntity<List<CategoryDTO>> findAll() {
+        List<CategoryDTO> list = categoryService.findAll();
         return ResponseEntity.ok().body(list);
     }
 
