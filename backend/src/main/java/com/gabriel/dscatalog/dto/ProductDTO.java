@@ -3,6 +3,10 @@ package com.gabriel.dscatalog.dto;
 import com.gabriel.dscatalog.entities.Category;
 import com.gabriel.dscatalog.entities.Product;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -14,11 +18,17 @@ public class ProductDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
+
+    @Size(min = 5, max = 60, message = "Name should be between 0 and 60 characters")
+    @NotBlank(message = "Mandatory field")
     private String name;
     private String description;
+
+    @Positive(message = "Price should be greater than zero")
     private Double price;
     private String imgUrl;
 
+    @PastOrPresent(message = "Product date cannot be forward")
     private Instant date;
 
     private List<CategoryDTO> categories = new ArrayList<>();

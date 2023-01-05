@@ -2,6 +2,8 @@ package com.gabriel.dscatalog.dto;
 
 import com.gabriel.dscatalog.entities.User;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,8 +13,12 @@ public class UserDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
+
+    @NotBlank(message = "Mandatory field")
     private String firstName;
     private String lastName;
+
+    @Email(message = "Fill this field with a valid email")
     private String email;
 
     Set<RoleDTO> roles = new HashSet<>();
